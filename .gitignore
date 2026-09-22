@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Build outputs
+dist/
+
+# Logs and debug
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# TypeScript incremental
+*.tsbuildinfo
+
+.worktrees/
+
+# Scratch / temp work
+.tmp/
+
+# Local SQLite database
+data/
+credentials.key
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Test coverage reports
+coverage/
+
+# Browser QA artifacts
+.playwright-cli/
+output/

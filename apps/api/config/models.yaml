@@ -1,0 +1,158 @@
+# AI Model Router model catalog
+# Snapshot reviewed 2026-09-18. Prices are USD per 1K tokens, estimates only.
+# Sources: https://openrouter.ai/api/v1/models
+# https://developers.openai.com/api/docs/models/o3-mini
+# https://platform.claude.com/docs/en/about-claude/model-deprecations
+# https://ai.google.dev/gemini-api/docs/pricing
+# https://console.groq.com/docs/models
+#
+# This file is the routable model set. It is deliberately small and curated by
+# hand, so adding a model is a one block change here.
+#
+# What lives here: task tags, a quality estimate, a latency baseline and a
+# pricing snapshot for when the network is unavailable. The quality figure is a
+# maintainer estimate on a 0 to 100 scale, not a benchmark result, so treat it
+# as an opinion you can change.
+#
+# What is fetched: live prices and context limits, pulled from the public
+# OpenRouter catalog by the running instance every refresh_hours and mirrored
+# into SQLite. No key is required, and there is no sync command to remember.
+#
+# A fetched price is only adopted when OpenRouter bills it: for an openrouter
+# entry, or where openrouter_id sits under the provider's own namespace. A
+# provider that hosts open weights itself keeps the price written here.
+#
+# `speed_index` and `price_index` are derived from latency and live pricing at
+# refresh time, so they never need to be maintained by hand.
+
+settings:
+  # How often a running instance refreshes prices from OpenRouter.
+  refresh_hours: 6
+  catalog_url: https://openrouter.ai/api/v1/models
+
+models:
+  - provider: openai
+    model: gpt-4o-mini
+    openrouter_id: openai/gpt-4o-mini
+    strengths: [chat, summarization, translation, email, customer_support, agent_step]
+    quality: 71
+    latency_ms: 400
+    context: 128000
+    vision: true
+    functions: true
+    price: { input: 0.00015, output: 0.0006 }
+
+  - provider: openai
+    model: gpt-4o
+    openrouter_id: openai/gpt-4o
+    strengths: [reasoning, coding, chat, debugging, data_analysis, planning, writing]
+    quality: 86
+    latency_ms: 800
+    context: 128000
+    vision: true
+    functions: true
+    price: { input: 0.0025, output: 0.01 }
+
+  - provider: openai
+    model: o3-mini
+    openrouter_id: openai/o3-mini
+    strengths: [reasoning, math_reasoning, coding]
+    quality: 88
+    latency_ms: 2600
+    context: 200000
+    vision: false
+    functions: true
+    price: { input: 0.0011, output: 0.0044 }
+
+  - provider: anthropic
+    model: claude-haiku-4-5-20251001
+    openrouter_id: anthropic/claude-haiku-4.5
+    strengths: [chat, summarization, writing, email, customer_support]
+    quality: 74
+    latency_ms: 380
+    context: 200000
+    vision: true
+    functions: true
+    price: { input: 0.001, output: 0.005 }
+
+  - provider: anthropic
+    model: claude-sonnet-4-6
+    openrouter_id: anthropic/claude-sonnet-4.6
+    strengths: [coding, reasoning, writing, debugging, chat, planning, data_analysis]
+    quality: 89
+    latency_ms: 640
+    context: 1000000
+    vision: true
+    functions: true
+    price: { input: 0.003, output: 0.015 }
+
+  - provider: google
+    model: gemini-3.1-flash-lite
+    openrouter_id: google/gemini-3.1-flash-lite
+    strengths: [chat, summarization, translation, agent_step, customer_support]
+    quality: 68
+    latency_ms: 320
+    context: 1048576
+    vision: true
+    functions: true
+    price: { input: 0.00025, output: 0.0015 }
+
+  - provider: google
+    model: gemini-3.5-flash
+    openrouter_id: google/gemini-3.5-flash
+    strengths: [reasoning, coding, data_analysis, chat, planning]
+    quality: 84
+    latency_ms: 700
+    context: 1048576
+    vision: true
+    functions: true
+    price: { input: 0.0015, output: 0.009 }
+
+  # Groq hosts this itself, so the OpenRouter listing below is a different host
+  # and supplies metadata only, never price. Groq's own published rate is used.
+  # This replaced llama-3.3-70b-versatile, which Groq shut down on 2026-08-16
+  # for free and developer tiers and now sells only on a committed-spend
+  # contract. Groq names this model as the migration target.
+  - provider: groq
+    model: openai/gpt-oss-120b
+    openrouter_id: openai/gpt-oss-120b
+    strengths: [reasoning, coding, chat, agent_step, summarization]
+    quality: 80
+    latency_ms: 150
+    context: 131072
+    vision: false
+    functions: true
+    price: { input: 0.00015, output: 0.0006 }
+
+  - provider: openrouter
+    model: deepseek/deepseek-chat
+    openrouter_id: deepseek/deepseek-chat
+    strengths: [coding, reasoning, math_reasoning, chat, debugging]
+    quality: 82
+    latency_ms: 900
+    context: 163840
+    vision: false
+    functions: true
+    price: { input: 0.00032, output: 0.00089 }
+
+  - provider: openrouter
+    model: meta-llama/llama-3.1-8b-instruct
+    openrouter_id: meta-llama/llama-3.1-8b-instruct
+    strengths: [chat, translation, summarization]
+    quality: 55
+    latency_ms: 260
+    context: 131072
+    vision: false
+    functions: true
+    price: { input: 0.00005, output: 0.00008 }
+
+  - provider: openrouter
+    model: qwen/qwen-2.5-coder-32b-instruct
+    openrouter_id: qwen/qwen-2.5-coder-32b-instruct
+    strengths: [coding, debugging]
+    quality: 79
+    latency_ms: 620
+    context: 32768
+    vision: false
+    functions: false
+    price: { input: 0.00066, output: 0.001 }

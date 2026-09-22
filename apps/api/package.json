@@ -1,0 +1,48 @@
+{
+  "name": "api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc --project tsconfig.build.json",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src --ext .ts",
+    "generate-key": "tsx scripts/generateApiKey.ts",
+    "admin:key": "tsx scripts/adminKey.ts",
+    "seed:demo": "tsx scripts/seedDemoData.ts",
+    "clear:demo": "tsx scripts/clearDemoData.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fastify/compress": "^8.0.0",
+    "@fastify/cors": "^11.0.0",
+    "@fastify/helmet": "^12.0.1",
+    "@fastify/static": "^10.1.3",
+    "dotenv": "^16.4.5",
+    "fastify": "^5.7.4",
+    "p-retry": "^7.1.1",
+    "p-timeout": "^7.0.1",
+    "yaml": "^2.9.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^22.10.0",
+    "@vitest/coverage-v8": "^4.1.11",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.46.4",
+    "vitest": "^4.1.11"
+  },
+  "description": "AI Model Router routing engine \u2014 task-aware model selection, fallback chains and cost accounting over multiple LLM providers.",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "license": "PolyForm-Shield-1.0.0"
+}

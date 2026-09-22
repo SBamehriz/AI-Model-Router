@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0E1015" />
+    <!-- Before the stylesheet: decides the first frame's theme so it never flashes. -->
+    <script src="/theme.js"></script>
+
+    <meta
+      name="description"
+      content="AI Model Router: a self-hosted LLM router that picks a model per request and shows the decision behind it."
+    />
+    <link rel="icon" type="image/svg+xml" href="/router-mark.svg" />
+    <title>AI Model Router: routing dashboard</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

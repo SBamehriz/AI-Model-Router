@@ -1,0 +1,14 @@
+AI Model Router licensing notice
+
+Copyright (c) 2026 Salim Ba Mehriz
+
+This project is distributed under PolyForm Shield 1.0.0. See LICENSE.
+
+The project incorporates third-party code that is itself MIT licensed and
+copied into the source tree rather than installed as a dependency. The
+interface primitives under apps/dashboard/src/components/ui that follow the
+shadcn/ui pattern, and the class-name helper in apps/dashboard/src/lib/utils.ts,
+derive from shadcn/ui, Copyright (c) 2023 shadcn, used under the MIT License.
+The permissions granted by those terms are unaffected by the license above.
+Dependencies likewise keep their own licenses and notices, and dependency and
+contributor copyrights remain with their respective holders.

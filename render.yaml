@@ -1,0 +1,23 @@
+# Native Node hosting with persistent SQLite. The service and disk are paid.
+services:
+  - type: web
+    name: ai-model-router
+    runtime: node
+    plan: 0.5c-512mb
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /ready
+    numInstances: 1
+    disk:
+      name: router-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: DATABASE_PATH
+        value: /var/data/ai-model-router.db
+      - key: AI_MODEL_ROUTER_ADMIN_KEY
+        generateValue: true

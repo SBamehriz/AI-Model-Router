@@ -1,0 +1,309 @@
+/* System fonts keep the workspace usable without a network connection. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    /* One set of brand channels, so a tint and a solid fill are provably the
+       same three colours. Kept as triplets for the same reason the semantic
+       tokens below are: alpha is applied where it is used, not duplicated. */
+    --brand-green-rgb: 34 197 94;
+    --brand-teal-rgb: 20 184 166;
+    --brand-blue-rgb: 14 165 233;
+    --brand-green: rgb(var(--brand-green-rgb));
+    --brand-teal: rgb(var(--brand-teal-rgb));
+    --brand-blue: rgb(var(--brand-blue-rgb));
+    /* Three weights, one angle each, and nothing else paints brand colour.
+       Solid marks the brand itself, wash marks a surface the brand owns, and
+       rule is the line that points at the selected thing. Mixed angles and
+       hand-picked alphas were what made the same gradient look like two
+       unrelated treatments. */
+    --brand-gradient: linear-gradient(90deg, var(--brand-green), var(--brand-teal) 50%, var(--brand-blue));
+    --brand-rule: linear-gradient(180deg, var(--brand-green), var(--brand-blue));
+    /* The same three hues, dark enough to be read as text on a light surface.
+       The brand colours are tuned to sit on a dark background or to be filled
+       shapes; as letterforms on white they measure about 2:1, so text needs
+       its own stops rather than the ones a button uses. */
+    --brand-green-ink-rgb: 21 128 61;
+    --brand-teal-ink-rgb: 15 118 110;
+    --brand-blue-ink-rgb: 3 105 161;
+    --brand-gradient-text: linear-gradient(90deg, rgb(var(--brand-green-ink-rgb)), rgb(var(--brand-teal-ink-rgb)) 50%, rgb(var(--brand-blue-ink-rgb)));
+    --brand-wash: linear-gradient(115deg, rgb(var(--brand-green-rgb) / .10), rgb(var(--brand-teal-rgb) / .07) 52%, rgb(var(--brand-blue-rgb) / .10));
+    --brand-wash-strong: linear-gradient(115deg, rgb(var(--brand-green-rgb) / .20), rgb(var(--brand-teal-rgb) / .14) 52%, rgb(var(--brand-blue-rgb) / .20));
+    --background: 220 20% 97%;
+    --foreground: 220 20% 14%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 14%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 165 18% 12%;
+    --primary: 167 67% 26%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 160 16% 92%;
+    --secondary-foreground: 165 22% 20%;
+    --muted: 220 16% 94%;
+    --muted-foreground: 220 9% 40%;
+    --accent: 160 16% 92%;
+    --accent-foreground: 165 22% 20%;
+    --destructive: 0 67% 43%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 87%;
+    --input: 160 8% 65%;
+    --ring: 167 67% 26%;
+    --radius: 0.6rem;
+    --surface-shadow: 0 2px 3px hsl(165 25% 15% / .025), 0 10px 28px hsl(165 25% 15% / .035);
+    --ease-settle: cubic-bezier(.22, 1, .36, 1);
+    --sidebar-background: 150 11% 95%;
+    --sidebar-foreground: 165 18% 12%;
+    --sidebar-accent: 160 27% 89%;
+    --sidebar-accent-foreground: 166 65% 24%;
+    --sidebar-border: 160 9% 87%;
+    /* Categorical series colours. One fixed order, so a series keeps its
+       colour across every chart, and enough of them that no two slices of the
+       task mix ever share one. */
+    --chart-1: 167 67% 26%;
+    --chart-2: 212 55% 42%;
+    --chart-3: 28 70% 40%;
+    --chart-4: 272 35% 50%;
+    --chart-5: 345 50% 45%;
+    --chart-6: 95 40% 30%;
+    --chart-7: 190 68% 30%;
+    --chart-8: 220 12% 42%;
+  }
+  .dark {
+    color-scheme: dark;
+    /* A tint has to survive a dark surface, so the same gradient carries more
+       alpha here. The hues do not change: only how much of them lands. */
+    --brand-wash: linear-gradient(115deg, rgb(var(--brand-green-rgb) / .16), rgb(var(--brand-teal-rgb) / .12) 52%, rgb(var(--brand-blue-rgb) / .16));
+    --brand-wash-strong: linear-gradient(115deg, rgb(var(--brand-green-rgb) / .22), rgb(var(--brand-teal-rgb) / .16) 52%, rgb(var(--brand-blue-rgb) / .22));
+    --brand-gradient-text: var(--brand-gradient);
+    --surface-shadow: 0 1px 0 rgb(255 255 255 / .025) inset, 0 8px 28px rgb(0 0 0 / .16);
+    --background: 222 20% 7%;
+    --foreground: 210 20% 94%;
+    --card: 222 17% 10%;
+    --card-foreground: 210 20% 94%;
+    --popover: 222 16% 13%;
+    --popover-foreground: 210 20% 94%;
+    --primary: 173 80% 40%;
+    --primary-foreground: 222 30% 7%;
+    --secondary: 220 14% 17%;
+    --secondary-foreground: 210 20% 94%;
+    --muted: 222 14% 14%;
+    --muted-foreground: 215 12% 67%;
+    --accent: 220 14% 18%;
+    --accent-foreground: 210 20% 94%;
+    --destructive: 0 72% 69%;
+    --destructive-foreground: 0 0% 8%;
+    --border: 220 13% 21%;
+    --input: 218 12% 43%;
+    --ring: 173 80% 40%;
+    --sidebar-background: 222 22% 6%;
+    --sidebar-foreground: 210 20% 94%;
+    --sidebar-accent: 220 15% 14%;
+    --sidebar-accent-foreground: 160 84% 65%;
+    --sidebar-border: 220 13% 19%;
+    --chart-1: 173 80% 45%;
+    --chart-2: 210 90% 65%;
+    --chart-3: 35 90% 62%;
+    --chart-4: 270 70% 75%;
+    --chart-5: 345 75% 68%;
+    --chart-6: 95 50% 58%;
+    --chart-7: 188 65% 60%;
+    --chart-8: 215 16% 68%;
+  }
+  * { @apply border-border; }
+  html { -webkit-font-smoothing: antialiased; font-optical-sizing: auto; }
+  body { @apply bg-background text-foreground font-sans; margin: 0; min-width: 320px; }
+  button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  button, a, summary, select { cursor: pointer; }
+  button:disabled { cursor: not-allowed; }
+  :focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 4px; }
+  ::selection { background: hsl(var(--primary) / .2); color: hsl(var(--foreground)); }
+  h1, h2, h3 { text-wrap: balance; }
+  input, select, textarea { max-width: 100%; }
+  select { @apply rounded-md border border-input bg-card px-3 text-sm; min-height: 2.75rem; transition: border-color 150ms ease; }
+  /* Every button and link answers a pointer. A select was the one control that did not. */
+  select:hover { @apply border-ring; }
+  pre, code { font-variant-ligatures: none; }
+}
+
+@layer components {
+  .workspace-sidebar { color: hsl(var(--sidebar-foreground)); }
+  .brand-wordmark {
+    display: inline-block;
+    /* The fallback wherever background-clip: text does not paint. */
+    color: rgb(var(--brand-green-ink-rgb));
+    background-image: var(--brand-gradient-text);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .dark .brand-wordmark { color: var(--brand-teal); }
+  .brand-mark { filter: drop-shadow(0 3px 8px rgb(14 165 233 / .12)); }
+  /* The one link with no answer to a pointer. It moves the mark rather than
+     tinting anything, because the wordmark beside it is gradient text and its
+     contrast is measured against whatever sits behind it: the tightest pair in
+     the interface. A hover background here would quietly move that number. */
+  .brand-home .brand-mark { transition: transform 180ms var(--ease-settle); }
+  .brand-home:hover .brand-mark { transform: scale(1.06); }
+  /* Fill backwards, not both: a retained transform would make the page the containing block for positioned descendants only when motion is allowed. */
+  .workspace-page { overflow-wrap: anywhere; animation: page-enter 280ms var(--ease-settle) backwards; }
+  .page-header { @apply flex flex-wrap items-start justify-between gap-5 pb-2; }
+  .page-title { @apply text-3xl font-semibold tracking-tight; font-size: clamp(1.75rem, 2.5vw, 2.125rem); line-height: 1.15; letter-spacing: -.04em; }
+  .page-description { @apply mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground; }
+  .section-panel { @apply min-w-0 rounded-xl border bg-card text-card-foreground; box-shadow: var(--surface-shadow); }
+  .section-heading { @apply flex flex-wrap items-start justify-between gap-4 px-5 pb-4 pt-5 sm:px-6 sm:pt-6; }
+  .section-body { @apply px-5 pb-5 sm:px-6 sm:pb-6; }
+  .metric-strip { @apply grid grid-cols-2 overflow-hidden rounded-xl border bg-card xl:grid-cols-4; box-shadow: var(--surface-shadow); }
+  .metric { @apply relative min-w-0 px-5 py-6 sm:px-6; }
+  .metric:first-child { background-image: var(--brand-wash); }
+  .metric-icon { @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-primary/15 text-primary; background-image: var(--brand-wash); }
+  .metric dd { overflow-wrap: anywhere; }
+  /* The lead tile already carries the wash, so its figure carries the same
+     gradient and the two read as one statement. The other three stay flat,
+     which is what makes this one read as the lead rather than as decoration
+     applied to every number.
+
+     Named rather than matched by position: a tile holds a figure and a hint,
+     both of them dd, and a selector that says dd paints the hint too. The
+     hint is 12px and meant to recede, so it came out gradient-filled and
+     unlike the same hint on every other tile. */
+  .metric:first-child .metric-figure {
+    color: rgb(var(--brand-green-ink-rgb));
+    background-image: var(--brand-gradient-text);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+  }
+  .dark .metric:first-child .metric-figure { color: var(--brand-teal); }
+  /* A placeholder encodes no value, so a gradient here cannot distort one,
+     and waiting is the moment the interface most needs to look deliberate. */
+  [data-slot='skeleton'] { background-image: var(--brand-wash); }
+  [data-slot='button'][data-variant='default'] {
+    background-color: var(--brand-teal);
+    background-image: var(--brand-gradient);
+    color: #07151b;
+    box-shadow: 0 1px 0 rgb(255 255 255 / .12) inset, 0 3px 12px rgb(14 165 233 / .08);
+  }
+  [data-slot='button'][data-variant='default']:hover { filter: brightness(1.08); }
+  .workspace-topbar { box-shadow: 0 1px 8px hsl(var(--foreground) / .025); }
+  .workspace-nav-link { position: relative; transition: background-color 160ms ease, color 160ms ease, box-shadow 160ms ease; }
+  .workspace-nav-link[aria-current='page'] { background-color: transparent; background-image: var(--brand-wash-strong); }
+  .workspace-nav-link[aria-current='page']::before { content: ''; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background-image: var(--brand-rule); }
+  .workspace-nav-link svg { transition: transform 180ms var(--ease-settle); }
+  .workspace-nav-link:hover svg { transform: translateX(2px); }
+  .connection-pill { @apply rounded-full border bg-background/80 px-3; transition: border-color 160ms ease, background-color 160ms ease; }
+  .connection-pill:hover { @apply border-primary/30 bg-accent; }
+  .empty-state-mark { @apply relative rounded-2xl border border-primary/15 p-4 text-primary; background-image: var(--brand-wash); box-shadow: 0 0 0 7px hsl(var(--primary) / .025); }
+  .segmented button { transition: background-color 140ms ease, color 140ms ease, box-shadow 140ms ease; }
+  .code-surface:focus-within { border-color: hsl(var(--primary) / .5); }
+  .metric + .metric { @apply border-l; }
+  .metric:nth-child(n+3) { @apply border-t xl:border-t-0; }
+  .metric:nth-child(3) { @apply border-l-0 xl:border-l; }
+  .segmented { @apply inline-flex flex-wrap gap-1 rounded-lg border bg-muted p-1; }
+  .segmented button[aria-pressed='true'] { @apply bg-card text-foreground shadow-sm; }
+  .data-table { @apply w-full text-sm; border-collapse: separate; border-spacing: 0; }
+  .data-table thead { @apply text-xs text-muted-foreground; }
+  .data-table thead th { @apply border-b pb-3; }
+  .data-table th, .data-table td { @apply px-3; }
+  .data-table th:first-child, .data-table td:first-child { @apply pl-0; }
+  .data-table th:last-child, .data-table td:last-child { @apply pr-0; }
+  .data-table tbody > tr > td, .data-table tbody > tr > th { @apply border-b py-3.5; }
+  .data-table tbody > tr:last-child > td, .data-table tbody > tr:last-child > th { @apply border-b-0; }
+  .data-table tbody > tr { transition: background-color 120ms ease; }
+  .data-table tbody > tr:hover { background: hsl(var(--muted) / .6); }
+  .eyebrow { @apply text-xs font-medium uppercase tracking-widest text-muted-foreground; }
+  .subtle-link { @apply inline-flex min-h-11 items-center gap-2 text-sm font-medium text-primary hover:underline hover:underline-offset-4; }
+  .notice { @apply flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border border-primary/20 px-4 py-3 text-xs leading-relaxed text-muted-foreground; background-image: var(--brand-wash); }
+  .code-surface { @apply overflow-auto rounded-lg border bg-muted p-4 font-mono text-xs leading-6; }
+  .status-dot { @apply inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary; }
+  .recharts-wrapper { outline: none; }
+  .recharts-default-tooltip { box-shadow: 0 8px 32px rgb(0 0 0 / .08); }
+}
+
+@keyframes page-enter { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@layer components {
+  .intro-page { @apply mx-auto max-w-6xl; }
+  .intro-hero { @apply grid items-center gap-12 pb-12 pt-3 xl:grid-cols-[.85fr_1.15fr] xl:gap-10 xl:pb-16 xl:pt-7; }
+  .intro-copy { animation: page-enter 400ms var(--ease-settle) backwards; }
+  .intro-copy h1 { margin-top: 1.5rem; font-size: clamp(2.9rem, 5vw, 4.6rem); font-weight: 650; line-height: 1.02; letter-spacing: -.055em; }
+  .intro-lead { @apply mt-6 text-2xl font-medium leading-snug tracking-tight; }
+  .intro-description { @apply mt-5 max-w-md text-sm leading-7 text-muted-foreground; }
+  .routing-scene { @apply min-w-0 rounded-2xl border bg-card p-5 sm:p-7; box-shadow: var(--surface-shadow); animation: page-enter 500ms 70ms var(--ease-settle) backwards; }
+  .scene-heading { @apply mb-6 flex items-center justify-between gap-3; }
+  .scene-request { @apply mx-auto flex max-w-sm items-center gap-3 rounded-lg border bg-background/70 px-4 py-3; }
+  .scene-stem { @apply mx-auto h-8 w-px bg-border; }
+  .scene-stem span { display: block; width: 1px; height: 100%; background: linear-gradient(transparent, rgb(var(--brand-teal-ink-rgb))); }
+  .dark .scene-stem span { background: linear-gradient(transparent, var(--brand-teal)); }
+  .scene-router { @apply mx-auto flex max-w-sm items-center justify-center gap-4 rounded-xl border border-primary/20 px-4 py-5; background-image: var(--brand-wash); }
+  .scene-branches { height: 3.25rem; }
+  .scene-branches svg { width: 100%; height: 100%; overflow: visible; }
+  .scene-branches path { fill: none; stroke: hsl(var(--border)); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+  /* One path, showing which way this request went. Nothing to compare it
+     against and no magnitude along its length, so the gradient reads as the
+     route rather than as a value. Ink stops in light, because a two pixel
+     line has to clear non-text contrast the same way a letterform does. */
+  .scene-branches .scene-active-path { stroke: url(#route-trace); stroke-width: 2; stroke-dasharray: 600; animation: trace-route 650ms var(--ease-settle) both; }
+  #route-trace stop:first-child { stop-color: rgb(var(--brand-green-ink-rgb)); }
+  #route-trace stop:last-child { stop-color: rgb(var(--brand-blue-ink-rgb)); }
+  .dark #route-trace stop:first-child { stop-color: var(--brand-green); }
+  .dark #route-trace stop:last-child { stop-color: var(--brand-blue); }
+  .scene-priorities { @apply grid grid-cols-3 gap-2; }
+  .scene-priorities button { @apply flex min-w-0 flex-col items-center gap-2 rounded-lg border bg-background/50 px-1.5 py-4 text-center text-xs text-muted-foreground; transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease; }
+  .scene-priorities button:hover { @apply border-primary/40 text-foreground; }
+  .scene-priorities button:active { @apply bg-primary/15; }
+  .scene-priorities button[aria-pressed='true'] { @apply border-primary/50 text-primary; background-image: var(--brand-wash-strong); box-shadow: 0 0 0 1px hsl(var(--primary) / .07); }
+  .scene-priorities button span { @apply font-semibold; }
+  .scene-priorities code { font-size: .625rem; }
+  .scene-explanation { @apply mt-5 min-h-[7.5rem] border-t pt-5; }
+  .scene-return { @apply mt-4 flex items-center justify-center gap-2 border-t pt-4 text-center text-xs text-muted-foreground; }
+  .intro-explainer { @apply grid gap-5 border-y py-8 md:grid-cols-[.8fr_1.2fr] md:gap-12; }
+  .intro-explainer h2 { @apply mt-3 max-w-sm text-2xl font-semibold leading-snug tracking-tight; }
+  .intro-explainer > p { @apply self-center text-sm leading-7 text-muted-foreground; }
+  .intro-setup { @apply py-10; }
+  .intro-setup-step { @apply border-t pt-5; }
+  .intro-footnote { @apply border-t pt-5 text-xs leading-6 text-muted-foreground; }
+  .guide-page { @apply mx-auto max-w-6xl; }
+  .guide-header { @apply mb-9 flex flex-wrap items-end justify-between gap-6 border-b pb-7; }
+  .guide-layout { @apply grid items-start gap-8 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-12; }
+  .guide-topics { @apply grid grid-cols-1 sm:grid-cols-2 lg:sticky lg:top-8 lg:block; }
+  .guide-topics > p { @apply sm:col-span-2; }
+  .guide-topic { @apply mb-1 flex min-h-11 w-full items-center justify-between gap-2 rounded-md px-3 text-left text-sm text-muted-foreground; transition: color 150ms ease, background-color 150ms ease; }
+  .guide-topic:hover { @apply bg-muted text-foreground; }
+  .guide-topic[aria-pressed='true'] { @apply font-medium text-primary; background-image: var(--brand-wash-strong); }
+  .guide-article { @apply min-w-0; overflow-wrap: anywhere; animation: page-enter 220ms var(--ease-settle) backwards; }
+  .guide-article-heading { @apply flex items-start gap-4 border-b pb-7; }
+  .guide-article-heading > svg { @apply mt-1.5 shrink-0; }
+  .guide-section { @apply grid grid-cols-[1.5rem_minmax(0,1fr)] gap-3 border-b py-7 sm:gap-5; }
+  .guide-step-number { @apply pt-1 font-mono text-xs text-primary; }
+}
+@keyframes trace-route { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
+* { scrollbar-width: thin; scrollbar-color: hsl(var(--border)) transparent; }
+@media (pointer: coarse) { button, [role='button'], input, select { min-height: 44px; } }
+@media (prefers-reduced-motion: reduce) {
+  .workspace-nav-link:hover svg, .brand-home:hover .brand-mark { transform: none; }
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media (prefers-reduced-transparency: reduce) { .backdrop-blur-xl { backdrop-filter: none; background: hsl(var(--background)); } }
+@media (prefers-contrast: more) {
+  :root, .dark { --border: 160 5% 48%; }
+  /* Painted letterforms lose to a solid colour when contrast is requested. */
+  .brand-wordmark, .metric:first-child .metric-figure {
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+    color: hsl(var(--foreground));
+  }
+}
+
+@media (max-width: 1023px) {
+  #workspace-navigation { max-width: calc(100vw - 1rem); overflow-y: auto; padding-bottom: env(safe-area-inset-bottom); }
+}
+
+@media (forced-colors: active) {
+  .brand-wordmark { background: none; -webkit-text-fill-color: currentColor; color: LinkText; }
+  .metric:first-child .metric-figure { background: none; -webkit-text-fill-color: currentColor; color: CanvasText; }
+  .scene-active-path { stroke: Highlight; }
+  .workspace-nav-link[aria-current='page'] { outline: 1px solid Highlight; }
+}

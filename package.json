@@ -1,0 +1,43 @@
+{
+  "name": "ai-model-router",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail --names API,Web --prefix-colors cyan,magenta \"npm run dev --workspace=apps/api\" \"npm run dev --workspace=apps/dashboard\"",
+    "dev:api": "npm run dev --workspace=apps/api",
+    "dev:dashboard": "npm run dev --workspace=apps/dashboard",
+    "build": "npm run build --workspace=apps/api && npm run build --workspace=apps/dashboard",
+    "start": "npm run start --workspace=apps/api",
+    "test": "npm test --workspaces --if-present",
+    "lint": "npm run lint --workspace=apps/api && npm run lint --workspace=apps/dashboard",
+    "typecheck": "npm run typecheck --workspaces",
+    "test:coverage": "npm run test:coverage --workspace=apps/api",
+    "check": "npm run lint && npm run typecheck && npm run test:coverage && npm run test --workspace=apps/dashboard && npm run build",
+    "demo:seed": "npm run seed:demo --workspace=apps/api",
+    "demo:clear": "npm run clear:demo --workspace=apps/api",
+    "generate-key": "npm run generate-key --workspace=apps/api",
+    "admin:key": "npm run admin:key --workspace=apps/api",
+    "test:smoke": "node scripts/smoke.mjs",
+    "test:client": "node scripts/test-client.mjs",
+    "test:simulation": "node scripts/simulate.mjs",
+    "test:load": "node scripts/load.mjs",
+    "test:browser": "node scripts/browser.mjs"
+  },
+  "workspaces": [
+    "apps/api",
+    "apps/dashboard"
+  ],
+  "overrides": {
+    "esbuild": "^0.25.0"
+  },
+  "description": "Self-hosted LLM routing engine: task-aware model selection with cost, latency and quality trade-offs.",
+  "license": "PolyForm-Shield-1.0.0",
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.11",
+    "concurrently": "^9.1.2",
+    "playwright": "^1.63.0",
+    "vitest": "^4.1.11"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

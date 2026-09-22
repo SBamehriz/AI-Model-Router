@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: ${{ matrix.os }} / Node ${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            node: 22
+          - os: ubuntu-latest
+            node: 24
+          - os: windows-latest
+            node: 24
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run test:smoke
+      - run: npm run test:simulation
+      # Load, memory and integrity, so the figures this project quotes are
+      # reproducible rather than taken on trust. Small by default: a few
+      # thousand requests is half a minute here and still fails on a request
+      # that goes unanswered, a heap that does not come back, or a stored row
+      # that no longer recomputes. Raise LOAD_TEST_REQUESTS for a long run.
+      - run: npm run test:load
+      # The browser gate: every painted text element, focus indicator and
+      # hover state on every page and state, both themes, against its
+      # contrast floor. It caught two regressions that no unit test could
+      # see, back when it was run by hand. Once per run is enough, since
+      # contrast does not vary by Node version.
+      - if: matrix.os == 'ubuntu-latest' && matrix.node == 24
+        run: npx playwright install --with-deps chromium
+      - if: matrix.os == 'ubuntu-latest' && matrix.node == 24
+        run: npm run test:browser
+      - run: npm audit --audit-level=low
