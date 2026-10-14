@@ -32,10 +32,10 @@
   "description": "Self-hosted LLM routing engine: task-aware model selection with cost, latency and quality trade-offs.",
   "license": "PolyForm-Shield-1.0.0",
   "devDependencies": {
-    "@vitest/coverage-v8": "^4.1.11",
-    "concurrently": "^9.1.2",
-    "playwright": "^1.63.0",
-    "vitest": "^4.1.11"
+    "@vitest/coverage-v8": "^5.0.3",
+    "concurrently": "^10.0.6",
+    "playwright": "^1.64.0",
+    "vitest": "^5.0.3"
   },
   "engines": {
     "node": ">=22.13.0"
